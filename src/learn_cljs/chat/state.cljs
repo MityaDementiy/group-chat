@@ -15,3 +15,9 @@
        :rooms
        (filter #(= id (:id %)))
        first))
+
+(defn person-by-username [state username]
+  (->> state
+       :people
+       (filter #(= username (:username %)))
+       first))
