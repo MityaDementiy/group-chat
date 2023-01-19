@@ -21,3 +21,22 @@
        :people
        (filter #(= username (:username %)))
        first))
+
+;; Application data transition functions
+
+(defn received-people-list [state people]
+  (assoc state :people people))
+
+(defn person-joined [state person]
+  (let [username (:username person)
+        is-joined-user? #(= username (:username %))]
+    (update state :people
+            (fn [people]
+              (if (some is-joined-user? people)
+                (map
+                 (fn [user]
+                   (if (is-joined-user? user)
+                     (assoc user :online? true)
+                     user))
+                 people)
+                (conj people person))))))
