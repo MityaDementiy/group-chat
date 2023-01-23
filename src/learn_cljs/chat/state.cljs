@@ -40,3 +40,25 @@
                      user))
                  people)
                 (conj people person))))))
+
+(defn person-left [state username]
+  (update state :people
+          (fn [people]
+            (map #(if (= username (:username %))
+                    (assoc % :online? false)
+                    %) people))))
+
+(defn received-rooms-list [state rooms]
+  (assoc state :rooms rooms))
+
+(defn room-added [state room]
+  (update state :rooms conj room))
+
+(defn message-received [state message]
+  (update state :messages conj message))
+
+(defn messages-received [state messages]
+  (assoc state :messages messages))
+
+(defn messages-cleared [state]
+  (assoc state :messages []))
