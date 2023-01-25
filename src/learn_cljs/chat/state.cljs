@@ -4,7 +4,10 @@
   {:rooms []
    :people []
    :messages []
-   :current-user nil})
+   :current-user nil
+   :current-view nil
+   :auth-modal :sign-in
+   :create-room-input-open? false})
 
 (defonce app-state (atom initial-state))
 
