@@ -25,6 +25,26 @@
        (filter #(= username (:username %)))
        first))
 
+(defn is-current-view-room? [state]
+  (= ::room (get-in state [:current-view :type])))
+
+(defn current-room-id [state]
+  (get-in state [:current-view :id]))
+
+(defn is-current-view-conversation? [state]
+  (= ::conversation (get-in state [:current-view :type])))
+
+(defn current-conversation-recipient [state]
+  (get-in state [:current-view :username]))
+
+(defn room-list [state]
+  (let [current-room (when (is-current-view-room? state)
+                       (get-in state [:current-view :id]))]
+    (map (fn [room]
+           (assoc room
+                  :active? (= current-room (:id room))))
+         (:rooms state))))
+
 ;; Application data transition functions
 
 (defn received-people-list [state people]
