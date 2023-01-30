@@ -45,6 +45,14 @@
                   :active? (= current-room (:id room))))
          (:rooms state))))
 
+(defn people-list [app]
+  (let [current-username (when (is-current-view-conversation? app)
+                           (get-in app [:current-view :username]))]
+    (map (fn [person]
+           (assoc person
+                  :active? (= current-username (:username person))))
+         (:people app))))
+
 ;; Application data transition functions
 
 (defn received-people-list [state people]
