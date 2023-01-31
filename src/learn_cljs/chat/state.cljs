@@ -93,3 +93,25 @@
 
 (defn messages-cleared [state]
   (assoc state :messages []))
+
+(defn switched-to-room [state room-id]
+  (assoc state :current-view {:type ::room
+                              :id room-id}))
+
+(defn switched-to-conversation [state username]
+  (assoc state :current-view {:type ::conversation
+                              :username username}))
+
+(defn auth-modal-toggled [state]
+  (update state :auth-modal
+          {:sign-up :sign-in
+           :sign-in :sign-up}))
+
+(defn user-authenticated [state user]
+  (assoc state :current-user user))
+
+(defn create-room-input-opened [state]
+  (assoc state :create-room-input-open? true))
+
+(defn create-room-input-closed [state]
+  (assoc state :create-room-input-open? false))
